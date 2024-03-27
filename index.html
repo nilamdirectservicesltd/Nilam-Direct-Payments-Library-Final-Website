@@ -30,6 +30,7 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
 
         .website:last-child {
@@ -39,6 +40,26 @@
         /* Iframe styling */
         iframe {
             border: none;
+            pointer-events: none; /* Disable pointer events on iframe */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Ensure overlay doesn't block clicks */
+        }
+
+        .overlay p {
+            font-size: 1.5rem;
+            text-align: center;
+            pointer-events: auto; /* Enable pointer events on text */
         }
     </style>
 </head>
@@ -62,6 +83,9 @@
                         <p>A simple tool for your business to speak the amount that received on your account with a confirmation sound just like Paytm.</p>
                         <p>Website: <a href="http://surl.li/qukxr" target="_blank">Nilam Direct Pay Soundbox</a></p>
                         <iframe src="http://surl.li/qukxr" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
 
@@ -72,6 +96,9 @@
                         <p>Instantly create customized UPI QR codes for your business, free of charge and hassle-free!</p>
                         <p>Website Link: <a href="https://bit.ly/48vHLIU">UPI QR Code Generator</a></p>
                         <iframe src="https://bit.ly/48vHLIU" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
 
@@ -82,6 +109,9 @@
                         <p>Generate customized UPI codes for your payments with ease using our tool!</p>
                         <p>Website Link: <a href="https://bit.ly/3Inb1qY">Nilam Direct Payments UPI Code Generator</a></p>
                         <iframe src="https://bit.ly/3Inb1qY" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
 
@@ -92,6 +122,9 @@
                         <p>A notification tool for tracking debit transactions.</p>
                         <p>Website Link: <a href="https://bit.ly/3VcVGkg">Debit Notification</a></p>
                         <iframe src="https://bit.ly/3VcVGkg" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
 
@@ -102,6 +135,9 @@
                         <p>Generate customized credit notification emails for your business.</p>
                         <p>Website Link: <a href="https://bit.ly/3ICLs4Z">Credit Notification Email Generator NDB</a></p>
                         <iframe src="https://bit.ly/3ICLs4Z" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
 
@@ -112,6 +148,9 @@
                         <p>Generate customized donation message emails for your bank transactions.</p>
                         <p>Website Link: <a href="https://bit.ly/3Vn4m7S">Nilam Direct Bank Amount Donation Message Email Generator</a></p>
                         <iframe src="https://bit.ly/3Vn4m7S" width="100%" height="300px"></iframe>
+                        <div class="overlay">
+                            <p>Please visit the website!</p>
+                        </div>
                     </section>
                 </div>
             </div>
