@@ -4,70 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nilam Direct Payments Library</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary: #D8AE7E;
+            --secondary: #F8C794;
+            --light: #FFE0B5;
+            --accent: #FFF2D7;
+            --dark: #3A3226;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: black; /* Set background color */
-            color: white; /* Set text color */
-            overflow-x: hidden; /* Disable horizontal scrolling */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--light) 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+            box-shadow: 0 4px 20px rgba(216, 174, 126, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.03);
         }
 
         h1 {
             text-align: center;
-            color: white;
-            margin-top: 20px;
+            color: var(--dark);
+            margin: 30px 0;
+            font-weight: 600;
+            font-size: 2.2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
         }
 
         #websites-list {
-            margin: 20px;
-            color: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .website {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(216, 174, 126, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            border-left: 5px solid var(--primary);
         }
 
-        .website:last-child {
-            border-bottom: none;
+        .website:nth-child(1) { transition-delay: 0.4s; }
+        .website:nth-child(2) { transition-delay: 0.5s; }
+        .website:nth-child(3) { transition-delay: 0.6s; }
+        .website:nth-child(4) { transition-delay: 0.7s; }
+        .website:nth-child(5) { transition-delay: 0.8s; }
+        .website:nth-child(6) { transition-delay: 0.9s; }
+
+        .website.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        /* Iframe styling */
+        .website h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+
+        .website p {
+            color: var(--dark);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .website a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .website a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .website a::after {
+            content: '→';
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .website a:hover::after {
+            margin-left: 10px;
+        }
+
         iframe {
             border: none;
-            pointer-events: none; /* Disable pointer events on iframe */
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            width: 100%;
+            height: 300px;
+            pointer-events: none;
         }
 
         .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin-top: -304px;
+            height: 300px;
+            background: rgba(216, 174, 126, 0.7);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Ensure overlay doesn't block clicks */
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .website:hover .overlay {
+            opacity: 1;
         }
 
         .overlay p {
             font-size: 1.5rem;
             text-align: center;
-            pointer-events: auto; /* Enable pointer events on text */
+            color: white;
+            font-weight: 500;
+            pointer-events: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+        }
+
+        .website:hover .overlay p {
+            transform: scale(1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                margin: 20px 0;
+            }
+            
+            .website {
+                padding: 20px;
+            }
+            
+            .website h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .website {
+                padding: 15px;
+            }
+            
+            .overlay p {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">Nilam Direct Payments Library</a>
+                <a class="navbar-brand floating" href="#">
+                    <i class="fas fa-book-open"></i> Nilam Direct Payments Library
+                </a>
             </div>
         </nav>
     </header>
@@ -76,80 +230,106 @@
         <div class="container">
             <h1>Welcome to Nilam Direct Payments Library</h1>
             <div id="websites-list">
-                <!-- First Website -->
+                <!-- 1 Website -->
                 <div class="website">
                     <section id="nilam-direct-pay-soundbox">
-                        <h2>Nilam Direct Pay Soundbox</h2>
-                        <p>A simple tool for your business to speak the amount that received on your account with a confirmation sound just like Paytm.</p>
-                        <p>Website: <a href="http://surl.li/qukxr" target="_blank">Nilam Direct Pay Soundbox</a></p>
-                        <iframe src="http://surl.li/qukxr" width="100%" height="300px"></iframe>
+                        <h2>NDS Link Shortener</h2>
+                        <p>NDS Link Shortener is a fast and simple tool to shorten long URLs for easy sharing and tracking.</p>
+                        <p>Website: <a href="https://nilamdirectservicesltd.github.io/NDS-Link-Shortener-Main/" target="_blank">Nilam Direct Pay Soundbox</a></p>
+                        <iframe src="https://nilamdirectservicesltd.github.io/NDS-Link-Shortener-Main/"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Second Website -->
+                <!-- 2 Website -->
                 <div class="website">
                     <section id="upi-qr-code-generator">
                         <h2>UPI QR Code Generator</h2>
                         <p>Instantly create customized UPI QR codes for your business, free of charge and hassle-free!</p>
-                        <p>Website Link: <a href="https://bit.ly/48vHLIU">UPI QR Code Generator</a></p>
-                        <iframe src="https://bit.ly/48vHLIU" width="100%" height="300px"></iframe>
+                        <p>Website Link: <a href="https://bit.ly/48vHLIU" target="_blank">UPI QR Code Generator</a></p>
+                        <iframe src="https://bit.ly/48vHLIU"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Third Website -->
+                <!-- 3 Website -->
                 <div class="website">
                     <section id="nilam-direct-payments-upi-code-generator">
                         <h2>Nilam Direct Payments UPI Code Generator</h2>
                         <p>Generate customized UPI codes for your payments with ease using our tool!</p>
-                        <p>Website Link: <a href="https://bit.ly/3Inb1qY">Nilam Direct Payments UPI Code Generator</a></p>
-                        <iframe src="https://bit.ly/3Inb1qY" width="100%" height="300px"></iframe>
+                        <p>Website Link: <a href="https://bit.ly/3Inb1qY" target="_blank">Nilam Direct Payments UPI Code Generator</a></p>
+                        <iframe src="https://bit.ly/3Inb1qY"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Fourth Website -->
+                <!-- 4 Website -->
                 <div class="website">
                     <section id="debit-notification">
                         <h2>Debit Notification</h2>
                         <p>A notification tool for tracking debit transactions.</p>
-                        <p>Website Link: <a href="https://bit.ly/3VcVGkg">Debit Notification</a></p>
-                        <iframe src="https://bit.ly/3VcVGkg" width="100%" height="300px"></iframe>
+                        <p>Website Link: <a href="https://bit.ly/3VcVGkg" target="_blank">Debit Notification</a></p>
+                        <iframe src="https://bit.ly/3VcVGkg"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Fifth Website -->
+                <!-- 5 Website -->
                 <div class="website">
                     <section id="credit-notification-email-generator-ndb">
                         <h2>Credit Notification Email Generator NDB</h2>
                         <p>Generate customized credit notification emails for your business.</p>
-                        <p>Website Link: <a href="https://bit.ly/3ICLs4Z">Credit Notification Email Generator NDB</a></p>
-                        <iframe src="https://bit.ly/3ICLs4Z" width="100%" height="300px"></iframe>
+                        <p>Website Link: <a href="https://bit.ly/3ICLs4Z" target="_blank">Credit Notification Email Generator NDB</a></p>
+                        <iframe src="https://bit.ly/3ICLs4Z"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Sixth Website -->
+                <!-- 6 Website -->
                 <div class="website">
                     <section id="nilam-direct-bank-amount-donation-message-email-generator">
                         <h2>Nilam Direct Bank Amount Donation Message Email Generator</h2>
                         <p>Generate customized donation message emails for your bank transactions.</p>
-                        <p>Website Link: <a href="https://bit.ly/3Vn4m7S">Nilam Direct Bank Amount Donation Message Email Generator</a></p>
-                        <iframe src="https://bit.ly/3Vn4m7S" width="100%" height="300px"></iframe>
+                        <p>Website Link: <a href="https://bit.ly/3Vn4m7S" target="_blank">Nilam Direct Bank Amount Donation Message Email Generator</a></p>
+                        <iframe src="https://bit.ly/3Vn4m7S"></iframe>
                         <div class="overlay">
-                            <p>Please visit the website!</p>
+                            <p>Click the link above to visit the website!</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 7 Website -->
+                <div class="website">
+                    <section id="nds-upi-payment-link-generator">
+                        <h2>NDS UPI Payment Link Generator</h2>
+                        <p>NDS UPI Payment Link Generator allows you to create secure and instant UPI payment links for easy transactions.</p>
+                        <p>Website Link: <a href="https://nilamdirectservicesltd.github.io/NDS-UPI-Payment-Link-Generator/" target="_blank">NDS UPI Payment Link Generator</a></p>
+                        <iframe src="https://nilamdirectservicesltd.github.io/NDS-UPI-Payment-Link-Generator/"></iframe>
+                        <div class="overlay">
+                            <p>Click the link above to visit the website!</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 8 Website -->
+                <div class="website">
+                    <section id="istore-nds-website-final">
+                        <h2>iStore NDS</h2>
+                        <p>iStore NDS Website Final is the official online platform for browsing, showcasing, and managing NDS digital products and services.</p>
+                        <p>Website Link: <a href="https://nilamdirectservicesltd.github.io/iSTORE-NDS-Website-Final/" target="_blank">iStore NDS</a></p>
+                        <iframe src="https://nilamdirectservicesltd.github.io/iSTORE-NDS-Website-Final/"></iframe>
+                        <div class="overlay">
+                            <p>Click the link above to visit the website!</p>
                         </div>
                     </section>
                 </div>
@@ -157,6 +337,41 @@
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate website cards in sequence
+            const websites = document.querySelectorAll('.website');
+            websites.forEach(website => {
+                setTimeout(() => {
+                    website.classList.add('visible');
+                }, 100);
+            });
+
+            // Add hover effect to iframes
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                iframe.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                });
+                
+                iframe.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Disable text selection on the entire page
+        document.addEventListener('selectstart', function(event) {
+            event.preventDefault();
+        });
+    </script>
 </body>
-    </html>
+</html>
